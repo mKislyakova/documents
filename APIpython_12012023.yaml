@@ -1,0 +1,163 @@
+openapi: 3.0.3
+info:
+  title: NotesAPI
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:5000/api
+paths:
+  /notes:
+    get:
+      tags:
+        - notes
+      summary: Get all notes
+      description: Get all notes
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+  /note/{id}:
+    get:
+      tags:
+        - note
+      summary: Get one note
+      description: Get one note
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Note id
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+        '404':
+          description: Note does not exist
+  /note/create:
+    post:
+      tags:
+        - note
+      summary: Create note
+      description: Create note
+      requestBody:
+        description: Create note
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                header:
+                  type: string
+                  example: First note
+                body:
+                  type: string
+                  example: First note
+              required:
+                - header
+                - body
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: Note does not exist
+  /note/{id}/archive:
+    post:
+      tags:
+        - note
+      summary: Send to archive
+      description: Send to archive
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Note id
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: Note does not exist
+  /note/{id}/edit:
+    post:
+      tags:
+        - note
+      summary: Edit note
+      description: Edit note
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Note id
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Create note
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                header:
+                  type: string
+                  example: First note
+                body:
+                  type: string
+                  example: First note
+              required:
+                - header
+                - body
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: Note does not exist
+        '500':
+          description: Archive note
+  /note/{id}/delete:
+    delete:
+      tags:
+        - note
+      summary: Delete note
+      description: Create note
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id of note
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: Note does not exist
+components:
+  schemas:
+    Note:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        header:
+          type: string
+          example: First note
+        body:
+          type: string
+          example: First note
+        date:
+          type: string
+          format: date-time

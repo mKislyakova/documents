@@ -1,1 +1,3 @@
-# specification
+└── documents
+    ├── openAPI
+    └── acyncAPI

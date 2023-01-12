@@ -25,13 +25,7 @@ paths:
       summary: Get one note
       description: Get one note
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: Id of note
-          schema:
-            type: integer
-            format: int64
+      - $ref: '#/components/parameters/id'
       responses:
         '200':
           description: successful operation
@@ -68,26 +62,87 @@ paths:
           description: Successful operation
         '404':
           description: Note does not exist
+  /note/{id}/archive:
+    post:
+      tags:
+        - note
+      summary: Send to archive
+      description: Send to archive
+      parameters:
+      - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: Note does not exist
+  /note/{id}/archive/return:
+    post:
+      tags:
+        - note
+      summary: Return from archive
+      description: Return from archive
+      parameters:
+      - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: Note does not exist
+  /note/{id}/edit:
+    post:
+      tags:
+        - note
+      summary: Edit note
+      description: Edit note
+      parameters:
+      - $ref: '#/components/parameters/id'
+      requestBody:
+        description: Edit note
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                header:
+                  type: string
+                  example: First note
+                body:
+                  type: string
+                  example: First note
+              required:
+                - header
+                - body
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: Note does not exist
+        '500':
+          description: Archive note
   /note/{id}/delete:
     delete:
       tags:
         - note
       summary: Delete note
-      description: Create note
+      description: Delete note
       parameters:
-        - name: id
-          in: path
-          required: true
-          description: Id of note
-          schema:
-            type: integer
-            format: int64
+      - $ref: '#/components/parameters/id'
       responses:
         '200':
           description: Successful operation
         '404':
           description: Note does not exist
 components:
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: Note id
+      schema:
+        type: integer
+        format: int64
+        example: 4
   schemas:
     Note:
       type: object
